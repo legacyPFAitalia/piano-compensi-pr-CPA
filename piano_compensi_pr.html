@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piano Compensi PR – Multi-Book CPA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dim: #C9A227;
+    --green: #22C55E;
+    --teal: #14B8A6;
+    --blue: #3B82F6;
+    --purple: #A855F7;
+    --dark: #080C1A;
+    --navy: #0E1228;
+    --card: #111735;
+    --card2: #161d3a;
+    --gray: #7A839A;
+    --off: #E8EAF0;
+    --sisal: #E8A000;
+    --betfair: #DAB800;
+    --goldbet: #C0392B;
+    --lotto: #27AE60;
+    --planet: #2980B9;
+    --betsson: #8E44AD;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--off);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    background: rgba(8,12,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,200,66,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(245,200,66,0.1);
+    border: 1px solid rgba(245,200,66,0.3);
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--gold);
+    letter-spacing: 2px;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero h1 span { color: var(--off); }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--gray);
+    margin-top: 1rem;
+    animation: fadeUp .7s .2s ease both;
+  }
+
+  /* Book pills */
+  .book-pills {
+    display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center;
+    margin-top: 2.5rem;
+    animation: fadeUp .7s .3s ease both;
+  }
+  .pill {
+    padding: .45rem 1.1rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #080C1A;
+  }
+
+  /* Stat row */
+  .stat-row {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 3rem;
+    animation: fadeUp .7s .4s ease both;
+  }
+  .stat-box {
+    background: var(--card);
+    border: 1.5px solid rgba(245,200,66,0.25);
+    border-radius: 12px;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    min-width: 140px;
+  }
+  .stat-box .val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-box .lbl {
+    font-size: .75rem;
+    color: var(--gray);
+    margin-top: .3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .scroll-hint {
+    margin-top: 3rem;
+    color: var(--gray);
+    font-size: .8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: fadeUp .7s .6s ease both, bounce 2s 1.5s ease-in-out infinite;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative;
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .75rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--off);
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-bottom: .5rem;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: .95rem;
+    margin-bottom: 3rem;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,200,66,0.2), transparent);
+    margin: 0 auto;
+  }
+
+  /* ─── BOOK GRID ─── */
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  .book-card {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255,255,255,0.06);
+    transition: transform .25s, border-color .25s;
+  }
+  .book-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .book-card-top {
+    padding: .6rem;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #080C1A;
+  }
+  .book-card-body {
+    padding: 1.2rem .8rem;
+    text-align: center;
+  }
+  .book-euro {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    line-height: 1;
+  }
+  .book-per { font-size: .75rem; color: var(--gray); margin-top: .2rem; }
+  .book-note { font-size: .7rem; margin-top: .6rem; opacity: .7; font-style: italic; }
+
+  /* ─── SCALA TABLE ─── */
+  .scala-table { width: 100%; border-collapse: collapse; }
+  .scala-table tr { transition: background .2s; }
+  .scala-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .scala-table td {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: .95rem;
+  }
+  .scala-table td:first-child {
+    font-weight: 700;
+    font-size: .85rem;
+    white-space: nowrap;
+    border-radius: 8px 0 0 8px;
+    min-width: 90px;
+    text-align: center;
+  }
+  .scala-table td:last-child {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    text-align: right;
+    border-radius: 0 8px 8px 0;
+    white-space: nowrap;
+  }
+  .scala-table td.book-names {
+    color: var(--off);
+    font-size: .88rem;
+    line-height: 1.5;
+  }
+  .badge {
+    display: inline-block;
+    padding: .25rem .7rem;
+    border-radius: 4px;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-right: .3rem;
+  }
+
+  /* ─── ESEMPIO CARDS ─── */
+  .esempio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+  }
+  .esempio-card {
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid var(--accent, rgba(255,255,255,.1));
+    transition: transform .25s;
+  }
+  .esempio-card:hover { transform: translateY(-5px); }
+  .esempio-top {
+    padding: .75rem 1.2rem;
+    font-weight: 700;
+    font-size: .85rem;
+    color: var(--dark);
+    letter-spacing: .5px;
+  }
+  .esempio-body { padding: 1.5rem 1.2rem; }
+  .esempio-detail { font-size: .82rem; color: var(--gray); margin-bottom: 1rem; line-height: 1.5; }
+  .esempio-calc { font-size: 1rem; color: var(--off); margin-bottom: .75rem; }
+  .esempio-result {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+  .esempio-sub { font-size: .75rem; color: var(--gray); margin-top: .3rem; }
+
+  .callout {
+    background: rgba(34,197,94,0.08);
+    border: 1.5px solid rgba(34,197,94,0.3);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    color: var(--green);
+    font-weight: 600;
+    font-size: .9rem;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+  .callout span { opacity: .7; font-weight: 400; }
+
+  /* ─── BONUS ─── */
+  .bonus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+  .bonus-card {
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid var(--accent, rgba(255,255,255,.08));
+    text-align: center;
+    transition: transform .25s;
+  }
+  .bonus-card:hover { transform: translateY(-5px); }
+  .bonus-top {
+    padding: .7rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #080C1A;
+  }
+  .bonus-body { padding: 1.8rem 1rem 1.5rem; }
+  .bonus-icon { font-size: 2rem; margin-bottom: .8rem; }
+  .bonus-label { font-size: .72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; }
+  .bonus-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    margin: .3rem 0;
+  }
+  .bonus-desc { font-size: .78rem; color: var(--gray); }
+
+  /* ─── RIEPILOGO TABLE ─── */
+  .riepilogo-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media(max-width:700px){ .riepilogo-wrap { grid-template-columns: 1fr; } }
+
+  .rtable { width: 100%; border-collapse: collapse; }
+  .rtable th {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: .75rem 1rem;
+    text-align: center;
+  }
+  .rtable th:first-child { border-radius: 8px 0 0 0; }
+  .rtable th:last-child { border-radius: 0 8px 0 0; }
+  .rtable td {
+    padding: .8rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: var(--card);
+    font-size: .9rem;
+  }
+  .rtable tr:last-child td { border-bottom: none; }
+  .rtable tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .rtable tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+  .rtable .euro { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; }
+  .rtable .total { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; }
+
+  .bonus-sidebar { display: flex; flex-direction: column; gap: .8rem; }
+  .bonus-row {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    border-left: 3px solid var(--accent, var(--gold));
+  }
+  .bonus-row-soglia { font-size: .8rem; color: var(--gray); margin-bottom: .3rem; }
+  .bonus-row-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .bonus-note-box {
+    background: rgba(34,197,94,0.08);
+    border: 1px solid rgba(34,197,94,0.25);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: .83rem;
+    color: var(--green);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .star-callout {
+    background: rgba(34,197,94,0.06);
+    border: 1.5px solid rgba(34,197,94,0.25);
+    border-radius: 10px;
+    padding: .9rem 1.2rem;
+    color: var(--green);
+    font-size: .85rem;
+    font-weight: 600;
+    margin-top: 1.2rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(245,200,66,0.1);
+    color: var(--gray);
+    font-size: .78rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  footer strong { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* stagger children */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
+  .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.15s; }
+  .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.25s; }
+  .reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.35s; }
+  .reveal-stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.45s; }
+  .reveal-stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:.55s; }
+
+  /* mobile nav */
+  @media(max-width:600px){
+    .nav-links { display:none; }
+    .stat-row { gap:.6rem; }
+    .stat-box { padding:.9rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PR · CPA</div>
+  <div class="nav-links">
+    <a href="#book">I Book</a>
+    <a href="#scala">Compensi</a>
+    <a href="#esempio">Esempi</a>
+    <a href="#bonus">Bonus</a>
+    <a href="#riepilogo">Riepilogo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Riservato · PR Network</div>
+  <h1>PIANO<br><span>COMPENSI</span></h1>
+  <p class="hero-sub">Multi-Book · Affiliazioni CPA · Scommesse & Casino</p>
+
+  <div class="book-pills">
+    <div class="pill" style="background:#E8A000">SISAL</div>
+    <div class="pill" style="background:#DAB800">BETFAIR</div>
+    <div class="pill" style="background:#C0392B;color:#fff">GOLDBET</div>
+    <div class="pill" style="background:#27AE60">LOTTOMATICA</div>
+    <div class="pill" style="background:#2980B9;color:#fff">PLANETWIN</div>
+    <div class="pill" style="background:#8E44AD;color:#fff">BETSSON</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="val">€15</div>
+      <div class="lbl">1 book / ID</div>
+    </div>
+    <div class="stat-box" style="border-color:rgba(245,200,66,.5)">
+      <div class="val" style="font-size:1.4rem; padding-top:.3rem">→ €20</div>
+      <div class="lbl">6 book / ID</div>
+    </div>
+    <div class="stat-box" style="border-color:rgba(34,197,94,.4)">
+      <div class="val" style="color:var(--green)">+€2K</div>
+      <div class="lbl">Bonus elite/mese</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">↓ &nbsp; scorri per scoprire &nbsp; ↓</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BOOK -->
+<section id="book">
+  <div class="reveal">
+    <div class="section-label">Step 01</div>
+    <h2 class="section-title">I BOOK CONVENZIONATI</h2>
+    <p class="section-sub">Ogni book vale €15 base per iscrizione. La stessa persona può essere iscritta a tutti e 6.</p>
+  </div>
+
+  <div class="book-grid reveal-stagger">
+    <div class="book-card" style="--accent:var(--sisal)">
+      <div class="book-card-top" style="background:var(--sisal)">SISAL</div>
+      <div class="book-card-body">
+        <div class="book-euro" style="color:var(--sisal)">€15</div>
+        <div class="book-per">per iscrizione</div>
+        <div class="book-note" style="color:var(--sisal)">★ fino a €20 multi-book</div>
+      </div>
+    </div>
+    <div class="book-card" style="--accent:var(--betfair)">
+      <div class="book-card-top" style="background:var(--betfair)">BETFAIR</div>
+      <div class="book-card-body">
+        <div class="book-euro" style="color:var(--betfair)">€15</div>
+        <div class="book-per">per iscrizione</div>
+        <div class="book-note" style="color:var(--betfair)">★ fino a €20 multi-book</div>
+      </div>
+    </div>
+    <div class="book-card" style="--accent:var(--goldbet)">
+      <div class="book-card-top" style="background:var(--goldbet);color:#fff">GOLDBET</div>
+      <div class="book-card-body">
+        <div class="book-euro" style="color:var(--goldbet)">€15</div>
+        <div class="book-per">per iscrizione</div>
+        <div class="book-note" style="color:var(--goldbet)">★ fino a €20 multi-book</div>
+      </div>
+    </div>
+    <div class="book-card" style="--accent:var(--lotto)">
+      <div class="book-card-top" style="background:var(--lotto)">LOTTOMATICA</div>
+      <div class="book-card-body">
+        <div class="book-euro" style="color:var(--lotto)">€15</div>
+        <div class="book-per">per iscrizione</div>
+        <div class="book-note" style="color:var(--lotto)">★ fino a €20 multi-book</div>
+      </div>
+    </div>
+    <div class="book-card" style="--accent:var(--planet)">
+      <div class="book-card-top" style="background:var(--planet);color:#fff">PLANETWIN</div>
+      <div class="book-card-body">
+        <div class="book-euro" style="color:var(--planet)">€15</div>
+        <div class="book-per">per iscrizione</div>
+        <div class="book-note" style="color:var(--planet)">★ fino a €20 multi-book</div>
+      </div>
+    </div>
+    <div class="book-card" style="--accent:var(--betsson)">
+      <div class="book-card-top" style="background:var(--betsson);color:#fff">BETSSON</div>
+      <div class="book-card-body">
+        <div class="book-euro" style="color:var(--betsson)">€15</div>
+        <div class="book-per">per iscrizione</div>
+        <div class="book-note" style="color:var(--betsson)">★ fino a €20 multi-book</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCALA -->
+<section id="scala">
+  <div class="reveal">
+    <div class="section-label">Step 02</div>
+    <h2 class="section-title">SCALA COMPENSI PER ID</h2>
+    <p class="section-sub">Quanti book prende la stessa persona → tanto guadagni per quella ID.</p>
+  </div>
+
+  <div class="reveal">
+    <table class="scala-table">
+      <tr>
+        <td style="background:rgba(122,131,154,.15); color:var(--gray); border-radius:8px;">
+          <span class="badge" style="background:var(--gray)">1 book</span>
+        </td>
+        <td class="book-names">SISAL</td>
+        <td style="color:var(--gray)">€15</td>
+      </tr>
+      <tr>
+        <td style="background:rgba(20,184,166,.12);">
+          <span class="badge" style="background:var(--teal)">2 book</span>
+        </td>
+        <td class="book-names">SISAL · BETFAIR</td>
+        <td style="color:var(--teal)">€16</td>
+      </tr>
+      <tr>
+        <td style="background:rgba(59,130,246,.12);">
+          <span class="badge" style="background:var(--blue)">3 book</span>
+        </td>
+        <td class="book-names">SISAL · BETFAIR · GOLDBET</td>
+        <td style="color:var(--blue)">€17</td>
+      </tr>
+      <tr>
+        <td style="background:rgba(168,85,247,.12);">
+          <span class="badge" style="background:var(--purple)">4 book</span>
+        </td>
+        <td class="book-names">SISAL · BETFAIR · GOLDBET · LOTTOMATICA</td>
+        <td style="color:var(--purple)">€18</td>
+      </tr>
+      <tr>
+        <td style="background:rgba(245,200,66,.1);">
+          <span class="badge" style="background:var(--gold)">5 book</span>
+        </td>
+        <td class="book-names">SISAL · BETFAIR · GOLDBET · LOTTOMATICA · PLANETWIN</td>
+        <td style="color:var(--gold)">€19</td>
+      </tr>
+      <tr>
+        <td style="background:rgba(34,197,94,.12);">
+          <span class="badge" style="background:var(--green)">6 book</span>
+        </td>
+        <td class="book-names" style="color:var(--green); font-weight:600;">
+          SISAL · BETFAIR · GOLDBET · LOTTOMATICA · PLANETWIN · BETSSON
+        </td>
+        <td style="color:var(--green); font-size:2.2rem;">€20 <small style="font-size:.9rem">★ MAX</small></td>
+      </tr>
+    </table>
+
+    <p style="font-size:.78rem; color:var(--gray); margin-top:1rem; font-style:italic;">
+      * Il compenso si applica per ogni book a cui la stessa ID viene iscritta · es: 1 ID su 4 book = 4 × €18 = €72
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ESEMPIO -->
+<section id="esempio">
+  <div class="reveal">
+    <div class="section-label">Step 03</div>
+    <h2 class="section-title">ESEMPI PRATICI</h2>
+    <p class="section-sub">Come si calcola il guadagno per singola ID.</p>
+  </div>
+
+  <div class="esempio-grid reveal-stagger">
+    <div class="esempio-card" style="--accent:var(--teal)">
+      <div class="esempio-top" style="background:var(--teal)">ID che prende 1 book</div>
+      <div class="esempio-body">
+        <div class="esempio-detail">es. solo SISAL</div>
+        <div class="esempio-calc">1 × €15</div>
+        <div class="esempio-result" style="color:var(--teal)">€15</div>
+        <div class="esempio-sub">guadagno per questa ID</div>
+      </div>
+    </div>
+    <div class="esempio-card" style="--accent:var(--gold)">
+      <div class="esempio-top" style="background:var(--gold)">ID che prende 4 book</div>
+      <div class="esempio-body">
+        <div class="esempio-detail">SISAL · BETFAIR · GOLDBET · LOTTOMATICA</div>
+        <div class="esempio-calc">4 × €18</div>
+        <div class="esempio-result" style="color:var(--gold)">€72</div>
+        <div class="esempio-sub">guadagno per questa ID</div>
+      </div>
+    </div>
+    <div class="esempio-card" style="--accent:var(--green)">
+      <div class="esempio-top" style="background:var(--green)">ID che prende 6 book</div>
+      <div class="esempio-body">
+        <div class="esempio-detail">Tutti i book convenzionati</div>
+        <div class="esempio-calc">6 × €20</div>
+        <div class="esempio-result" style="color:var(--green)">€120</div>
+        <div class="esempio-sub">guadagno per questa ID</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout reveal">
+    💡 <strong>Stesso mese:</strong> 10 ID su 1 book + 5 ID su 6 book<br>
+    <span>(10×€15) + (5×6×€20) = €150 + €600 = <strong>€750</strong></span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BONUS -->
+<section id="bonus">
+  <div class="reveal">
+    <div class="section-label">Step 04</div>
+    <h2 class="section-title">BONUS MENSILI</h2>
+    <p class="section-sub">Raggiungi le soglie di iscrizioni nel mese e incassi il bonus extra — si somma al compenso base.</p>
+  </div>
+
+  <div class="bonus-grid reveal-stagger">
+    <div class="bonus-card" style="--accent:var(--teal)">
+      <div class="bonus-top" style="background:var(--teal)">50 iscrizioni</div>
+      <div class="bonus-body">
+        <div class="bonus-icon">🎁</div>
+        <div class="bonus-label">Bonus</div>
+        <div class="bonus-amount" style="color:var(--teal)">€100</div>
+        <div class="bonus-desc">Primo traguardo mensile</div>
+      </div>
+    </div>
+    <div class="bonus-card" style="--accent:var(--gold)">
+      <div class="bonus-top" style="background:var(--gold)">100 iscrizioni</div>
+      <div class="bonus-body">
+        <div class="bonus-icon">🎁</div>
+        <div class="bonus-label">Bonus</div>
+        <div class="bonus-amount" style="color:var(--gold)">€250</div>
+        <div class="bonus-desc">Secondo traguardo mensile</div>
+      </div>
+    </div>
+    <div class="bonus-card" style="--accent:var(--green)">
+      <div class="bonus-top" style="background:var(--green)">500 iscrizioni</div>
+      <div class="bonus-body">
+        <div class="bonus-icon">🏆</div>
+        <div class="bonus-label">Bonus Elite</div>
+        <div class="bonus-amount" style="color:var(--green)">€2.000</div>
+        <div class="bonus-desc">Traguardo elite mensile</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RIEPILOGO -->
+<section id="riepilogo">
+  <div class="reveal">
+    <div class="section-label">Step 05</div>
+    <h2 class="section-title">RIEPILOGO GUADAGNO</h2>
+    <p class="section-sub">Compensi per ID + bonus mensili cumulabili.</p>
+  </div>
+
+  <div class="riepilogo-wrap reveal">
+    <div>
+      <table class="rtable">
+        <thead>
+          <tr>
+            <th>Book / ID</th>
+            <th>€ / Iscr.</th>
+            <th>Guadagno × 20 ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1 book</td>
+            <td class="euro" style="color:var(--gray)">€15</td>
+            <td class="total" style="color:var(--off)">20×1×€15 = €300</td>
+          </tr>
+          <tr>
+            <td>2 book</td>
+            <td class="euro" style="color:var(--teal)">€16</td>
+            <td class="total" style="color:var(--off)">20×2×€16 = €640</td>
+          </tr>
+          <tr>
+            <td>3 book</td>
+            <td class="euro" style="color:var(--blue)">€17</td>
+            <td class="total" style="color:var(--off)">20×3×€17 = €1.020</td>
+          </tr>
+          <tr>
+            <td>4 book</td>
+            <td class="euro" style="color:var(--purple)">€18</td>
+            <td class="total" style="color:var(--off)">20×4×€18 = €1.440</td>
+          </tr>
+          <tr>
+            <td>5 book</td>
+            <td class="euro" style="color:var(--gold)">€19</td>
+            <td class="total" style="color:var(--off)">20×5×€19 = €1.900</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:var(--green)">6 book</td>
+            <td class="euro" style="color:var(--green)">€20</td>
+            <td class="total" style="color:var(--green)">20×6×€20 = €2.400</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="star-callout">
+        ★ &nbsp;20 ID × 6 book = 120 iscrizioni → scatta il bonus +€250<br>
+        <strong>Totale reale: €2.400 + €250 = €2.650</strong>
+      </div>
+    </div>
+
+    <div class="bonus-sidebar">
+      <div style="font-size:.75rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:.3rem;">Bonus Mensili</div>
+      <div class="bonus-row" style="--accent:var(--teal)">
+        <div class="bonus-row-soglia">50 iscrizioni/mese</div>
+        <div class="bonus-row-val" style="color:var(--teal)">+€100</div>
+      </div>
+      <div class="bonus-row" style="--accent:var(--gold)">
+        <div class="bonus-row-soglia">100 iscrizioni/mese</div>
+        <div class="bonus-row-val" style="color:var(--gold)">+€250</div>
+      </div>
+      <div class="bonus-row" style="--accent:var(--green)">
+        <div class="bonus-row-soglia">500 iscrizioni/mese</div>
+        <div class="bonus-row-val" style="color:var(--green)">+€2.000</div>
+      </div>
+      <div class="bonus-note-box">
+        I bonus si sommano al compenso base mensile e sono cumulabili tra loro.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>PIANO COMPENSI PR</strong> · Multi-Book CPA · Scommesse & Casino<br>
+  <span style="margin-top:.5rem; display:block;">Riservato · Uso Interno · Per info contatta il tuo referente</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
