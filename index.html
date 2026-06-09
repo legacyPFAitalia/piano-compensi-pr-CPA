@@ -359,14 +359,15 @@ function renderBooksCheck() {
   const c = document.getElementById('books-check');
   c.innerHTML = allBooks.map(b => `
     <div class="book-check" id="chk-${b.book}" data-book="${b.book}">
-      <span style="color:${b.colore};font-weight:700;font-size:.78rem">${b.book}</span>
+      <span style="color:${b.colore};font-weight:700;font-size:.78rem;pointer-events:none">${b.book}</span>
     </div>`).join('');
-  c.querySelectorAll('.book-check').forEach(el => {
-    el.addEventListener('click', function() {
-      this.classList.toggle('selected');
-    });
-  });
 }
+
+// Delegazione eventi sul documento — funziona sempre
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('.book-check');
+  if (el) el.classList.toggle('selected');
+});
 
 function toggleBook(book) {
   const el = document.getElementById('chk-' + book);
