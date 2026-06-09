@@ -490,8 +490,10 @@ function renderCommissioni() {
 
   // Only count iscrizioni in current cycle
   const cycleIscr = allIscrizioni.filter(i => {
-    const d = new Date(i.data_iscrizione);
-    return d >= cycleStart && d < cycleEnd;
+    const d = new Date(i.data_iscrizione + 'T12:00:00');
+    const start = new Date(cycleStart); start.setHours(0,0,0,0);
+    const end = new Date(cycleEnd); end.setHours(23,59,59,999);
+    return d >= start && d <= end;
   });
 
   // Per persona
