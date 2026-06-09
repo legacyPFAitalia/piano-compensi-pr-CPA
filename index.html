@@ -195,7 +195,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(
         </div>
       </div>
       <label style="font-size:.78rem;color:var(--gray);display:block;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:1px">Book registrati</label>
-      <div class="books-check" id="books-check"></div>
+      <div id="books-check" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin:.5rem 0 1rem"></div>
       <div>
         <label style="font-size:.78rem;color:var(--gray);display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px">Note (opzionale)</label>
         <input class="form-input" id="iscr-note" placeholder="es. contatto diretto">
@@ -357,25 +357,39 @@ function renderBookGrid() {
 
 function renderBooksCheck() {
   const c = document.getElementById('books-check');
-  c.innerHTML = allBooks.map(b => `
-    <div class="book-check" id="chk-${b.book}" data-book="${b.book}">
-      <span style="color:${b.colore};font-weight:700;font-size:.78rem;pointer-events:none">${b.book}</span>
-    </div>`).join('');
+  c.innerHTML = '';
+  allBooks.forEach(b => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'chk-' + b.book;
+    btn.setAttribute('data-book', b.book);
+    btn.style.cssText = 'background:#0a0e1f;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:.5rem .7rem;cursor:pointer;font-family:DM Sans,sans-serif;font-size:.82rem;color:' + b.colore + ';font-weight:700;transition:all .2s;';
+    btn.textContent = b.book;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isSelected = this.getAttribute('data-selected') === '1';
+      if (isSelected) {
+        this.setAttribute('data-selected', '0');
+        this.style.border = '1.5px solid rgba(255,255,255,.1)';
+        this.style.background = '#0a0e1f';
+      } else {
+        this.setAttribute('data-selected', '1');
+        this.style.border = '1.5px solid #F5C842';
+        this.style.background = 'rgba(245,200,66,.08)';
+      }
+    });
+    c.appendChild(btn);
+  });
 }
 
-// Delegazione eventi sul documento — funziona sempre
-document.addEventListener('click', function(e) {
-  const el = e.target.closest('.book-check');
-  if (el) el.classList.toggle('selected');
-});
-
-function toggleBook(book) {
-  const el = document.getElementById('chk-' + book);
-  if(el) el.classList.toggle('selected');
-}
+function toggleBook(book) {}
 
 function getSelectedBooks() {
-  return allBooks.map(b => b.book).filter(b => document.getElementById('chk-' + b)?.classList.contains('selected'));
+  return allBooks.map(b => b.book).filter(b => {
+    const el = document.getElementById('chk-' + b);
+    return el && el.getAttribute('data-selected') === '1';
+  });
 }
 
 // ── MODAL ─────────────────────────────────────────────────────────────────
@@ -441,7 +455,7 @@ async function addIscrizione() {
   document.getElementById('iscr-nome').value = '';
   document.getElementById('iscr-cognome').value = '';
   document.getElementById('iscr-note').value = '';
-  document.querySelectorAll('.book-check').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('#books-check button').forEach(el => { el.setAttribute('data-selected','0'); el.style.border='1.5px solid rgba(255,255,255,.1)'; el.style.background='#0a0e1f'; });
   suc.style.display = 'block';
   await loadIscrizioni();
   renderCommissioni();
