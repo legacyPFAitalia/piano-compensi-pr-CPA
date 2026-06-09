@@ -229,37 +229,76 @@ async function loadAll() {
 
 function calcEuro(n) { return ({1:15,2:16,3:17,4:18,5:19,6:20})[Math.min(n,6)]||15; }
 
+// Margine netto per singola ID
+// incasso: 40 per book (35 per betsson/betfair)
+// deposito: 10.5 per sisal/goldbet/lottomatica/planetwin
+// commissione PR: calcEuro(nBooks) per ogni book
+function calcMargine(books) {
+  const INCASSO = { SISAL:40, BETFAIR:35, GOLDBET:40, LOTTOMATICA:40, PLANETWIN:40, BETSSON:35 };
+  const DEPOSITO = { SISAL:10.5, GOLDBET:10.5, LOTTOMATICA:10.5, PLANETWIN:10.5 };
+  const n = books.length;
+  const prRate = calcEuro(n);
+  let incasso = 0, depositi = 0, commissioni = 0;
+  books.forEach(b => {
+    incasso += INCASSO[b] || 40;
+    depositi += DEPOSITO[b] || 0;
+    commissioni += prRate;
+  });
+  return { incasso, depositi, commissioni, netto: incasso - depositi - commissioni };
+}
+
+function fmtEuro(n) {
+  const clr = n >= 0 ? 'var(--green)' : 'var(--red)';
+  return `<span style="color:${clr};font-family:'Bebas Neue',sans-serif">€${n.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`;
+}
+
 function renderOverview() {
   const totalPR = allPRs.filter(p=>!p.is_admin).length;
   const totalIscr = allIscr.reduce((s,i)=>s+(i.books?.length||0),0);
   const totalEuro = allIscr.reduce((s,i)=>{ const n=i.books?.length||0; return s+n*calcEuro(n); },0);
 
+  // Calcola margini totali
+  let totIncasso = 0, totDepositi = 0, totComm = 0, totNetto = 0;
+  allIscr.forEach(i => {
+    const m = calcMargine(i.books || []);
+    totIncasso += m.incasso; totDepositi += m.depositi;
+    totComm += m.commissioni; totNetto += m.netto;
+  });
+
   document.getElementById('ov-stats').innerHTML = `
     <div class="stat-card"><div class="stat-val">${totalPR}</div><div class="stat-lbl">PR attivi</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--blue)">${allIscr.length}</div><div class="stat-lbl">Persone registrate</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--teal)">${totalIscr}</div><div class="stat-lbl">Iscrizioni totali</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--green)">€${totalEuro.toLocaleString('it-IT')}</div><div class="stat-lbl">Commissioni totali</div></div>`;
+    <div class="stat-card"><div class="stat-val" style="color:var(--blue)">${allIscr.length}</div><div class="stat-lbl">Persone</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--teal)">€${totIncasso.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Incasso lordo</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--red)">€${totDepositi.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Depositi pagati</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--gold)">€${totComm.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Commissioni PR</div></div>
+    <div class="stat-card" style="border-color:rgba(34,197,94,.4)"><div class="stat-val" style="color:var(--green)">€${totNetto.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Margine netto</div></div>`;
 
   // Ranking
   const byPR = {};
   allIscr.forEach(i => {
     const pr = allPRs.find(p=>p.id===i.pr_id);
     const name = pr?.username || pr?.full_name || 'PR sconosciuto';
-    if (!byPR[name]) byPR[name] = { iscr:0, euro:0 };
-    const n = i.books?.length||0;
-    byPR[name].iscr += n;
-    byPR[name].euro += n * calcEuro(n);
+    if (!byPR[name]) byPR[name] = { iscr:0, comm:0, incasso:0, depositi:0, netto:0 };
+    const m = calcMargine(i.books || []);
+    byPR[name].iscr += i.books?.length||0;
+    byPR[name].comm += m.commissioni;
+    byPR[name].incasso += m.incasso;
+    byPR[name].depositi += m.depositi;
+    byPR[name].netto += m.netto;
   });
-  const sorted = Object.entries(byPR).sort((a,b)=>b[1].euro-a[1].euro);
+  const sorted = Object.entries(byPR).sort((a,b)=>b[1].netto-a[1].netto);
   document.getElementById('ov-ranking').innerHTML = sorted.length ? `
     <table class="data-table">
-      <thead><tr><th>#</th><th>PR</th><th>Iscrizioni</th><th>Commissioni</th></tr></thead>
+      <thead><tr><th>#</th><th>PR</th><th>Iscr.</th><th>Comm. PR</th><th>Incasso</th><th>Depositi</th><th>Margine netto</th></tr></thead>
       <tbody>${sorted.map(([name,d],idx)=>`
         <tr>
           <td style="color:var(--gray);font-size:.8rem">${idx+1}</td>
           <td style="font-weight:600">${name}</td>
           <td style="color:var(--blue)">${d.iscr}</td>
-          <td style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:1.1rem">€${d.euro.toLocaleString('it-IT')}</td>
+          <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">€${d.comm.toFixed(2)}</td>
+          <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif">€${d.incasso.toFixed(2)}</td>
+          <td style="color:var(--red);font-family:'Bebas Neue',sans-serif">€${d.depositi.toFixed(2)}</td>
+          <td>${fmtEuro(d.netto)}</td>
         </tr>`).join('')}
       </tbody>
     </table>` : '<div class="empty-state">Nessun dato.</div>';
@@ -334,17 +373,21 @@ async function loadAllIscrizioni() {
 
   document.getElementById('iscr-table').innerHTML = data.length ? `
     <table class="data-table">
-      <thead><tr><th>Persona</th><th>PR</th><th>Book</th><th>Data</th><th>Commissione</th><th>Azioni</th></tr></thead>
+      <thead><tr><th>Persona</th><th>PR</th><th>Book</th><th>Data</th><th>Incasso</th><th>Depositi</th><th>Comm. PR</th><th>Margine netto</th><th>Azioni</th></tr></thead>
       <tbody>${data.map(i => {
         const pr = allPRs.find(p=>p.id===i.pr_id);
         const n = i.books?.length||0;
         const euro = n * calcEuro(n);
+        const m = calcMargine(i.books || []);
         return `<tr>
           <td style="font-weight:600">${i.nome_cognome}</td>
           <td style="color:var(--gold)">${pr?.username||'—'}</td>
           <td>${(i.books||[]).map(b=>{ const lk=allLinks.find(x=>x.book===b); return `<span class="badge" style="background:${lk?.colore||'#666'}">${b}</span>`; }).join(' ')}</td>
           <td style="color:var(--gray);font-size:.8rem">${new Date(i.data_iscrizione).toLocaleDateString('it-IT')}</td>
-          <td style="color:var(--green);font-family:'Bebas Neue',sans-serif">€${euro}</td>
+          <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif" title="Incasso lordo">€${m.incasso.toFixed(2)}</td>
+          <td style="color:var(--red);font-family:'Bebas Neue',sans-serif" title="Depositi">-€${m.depositi.toFixed(2)}</td>
+          <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif" title="Commissione PR">-€${m.commissioni.toFixed(2)}</td>
+          <td>${fmtEuro(m.netto)}</td>
           <td><button class="btn-sm btn-red" onclick="deleteIscr('${i.id}')">Elimina</button></td>
         </tr>`;}).join('')}
       </tbody>
