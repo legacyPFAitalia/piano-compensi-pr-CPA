@@ -476,24 +476,31 @@ function calcEuro(nBooks) {
 
 function renderCommissioni() {
   if (!currentProfile) return;
-  const firstLogin = currentProfile.first_login_at ? new Date(currentProfile.first_login_at) : new Date();
   const now = new Date();
+  // Ciclo: parte dal first_login_at, dura 30 giorni
+  const firstLogin = currentProfile.first_login_at ? new Date(currentProfile.first_login_at) : now;
+  firstLogin.setHours(0,0,0,0);
+  // Trova il ciclo corrente
   const cycleStart = new Date(firstLogin);
-  while (cycleStart <= now) cycleStart.setDate(cycleStart.getDate() + 30);
-  cycleStart.setDate(cycleStart.getDate() - 30);
-  const cycleEnd = new Date(cycleStart); cycleEnd.setDate(cycleEnd.getDate() + 30);
+  while (true) {
+    const next = new Date(cycleStart);
+    next.setDate(next.getDate() + 30);
+    if (next > now) break;
+    cycleStart.setDate(cycleStart.getDate() + 30);
+  }
+  const cycleEnd = new Date(cycleStart);
+  cycleEnd.setDate(cycleEnd.getDate() + 30);
   const daysLeft = Math.max(0, Math.ceil((cycleEnd - now) / 86400000));
 
   document.getElementById('month-dates').textContent =
     cycleStart.toLocaleDateString('it-IT') + ' → ' + cycleEnd.toLocaleDateString('it-IT');
   document.getElementById('days-left').textContent = daysLeft + ' gg';
 
-  // Only count iscrizioni in current cycle
+  // Tutte le iscrizioni nel ciclo corrente
   const cycleIscr = allIscrizioni.filter(i => {
-    const d = new Date(i.data_iscrizione + 'T12:00:00');
-    const start = new Date(cycleStart); start.setHours(0,0,0,0);
-    const end = new Date(cycleEnd); end.setHours(23,59,59,999);
-    return d >= start && d <= end;
+    const d = new Date(i.data_iscrizione);
+    d.setHours(12,0,0,0);
+    return d >= cycleStart && d < cycleEnd;
   });
 
   // Per persona
