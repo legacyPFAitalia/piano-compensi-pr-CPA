@@ -227,14 +227,14 @@ async function loadAll() {
   });
 }
 
-function calcEuro(n) { return ({1:15,2:16,3:17,4:18,5:19,6:20})[Math.min(n,6)]||15; }
+function calcEuro(n) { return ({1:17,2:18,3:19,4:20})[Math.min(n,4)]||17; }
 
 // Margine netto per singola ID
-// incasso: 40 per book (35 per betsson/betfair)
-// deposito: 10.5 per sisal/goldbet/lottomatica/planetwin
+// incasso: 40 per book (SISAL, GOLDBET, LOTTOMATICA, PLANETWIN)
+// deposito: 10.5 per ogni book (tutti e 4)
 // commissione PR: calcEuro(nBooks) per ogni book
 function calcMargine(books) {
-  const INCASSO = { SISAL:40, BETFAIR:35, GOLDBET:40, LOTTOMATICA:40, PLANETWIN:40, BETSSON:35 };
+  const INCASSO = { SISAL:40, GOLDBET:40, LOTTOMATICA:40, PLANETWIN:40 };
   const DEPOSITO = { SISAL:10.5, GOLDBET:10.5, LOTTOMATICA:10.5, PLANETWIN:10.5 };
   const n = books.length;
   const prRate = calcEuro(n);
