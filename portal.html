@@ -336,8 +336,16 @@ function showTab(name) {
 
 // ── BOOKS ─────────────────────────────────────────────────────────────────
 async function loadBooks() {
-  const { data } = await sb.from('affiliate_links').select('*').order('book');
-  allBooks = data || [];
+  const [{ data: links }, { data: prLinks }] = await Promise.all([
+    sb.from('affiliate_links').select('*').order('book'),
+    sb.from('pr_links').select('*').eq('pr_id', currentUser.id)
+  ]);
+  allBooks = links || [];
+  // Sovrascrivi con i link personalizzati del PR, se presenti
+  (prLinks || []).forEach(pl => {
+    const b = allBooks.find(x => x.book === pl.book);
+    if (b) b.url = pl.url;
+  });
   renderBookGrid();
   renderBooksCheck();
 }
