@@ -166,12 +166,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
   </div>
 </div>
 
+<!-- PR LINKS MODAL -->
+<div id="prlinks-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:var(--card);border:1.5px solid rgba(245,200,66,.2);border-radius:14px;padding:2rem;width:100%;max-width:520px">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);margin-bottom:.3rem">LINK PERSONALIZZATI</div>
+    <div style="font-size:.85rem;color:var(--gray);margin-bottom:1.2rem" id="prlinks-pr-name"></div>
+    <input type="hidden" id="prlinks-pr-id">
+    <div id="prlinks-fields"></div>
+    <p style="font-size:.75rem;color:var(--gray);margin:1rem 0;font-style:italic">Lascia vuoto per usare il link di default del book.</p>
+    <div style="display:flex;gap:.7rem;margin-top:.5rem">
+      <button class="btn-gold" style="width:auto;padding:.7rem 2rem" onclick="savePRLinks()">SALVA</button>
+      <button style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:8px;padding:.7rem 1.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem" onclick="closePRLinksModal()">Annulla</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SUPA_URL = 'https://igagpwrdkjuburywrzcq.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnYWdwd3Jka2p1YnVyeXdyemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMDgyNzksImV4cCI6MjA5NjU4NDI3OX0.vX4c7XWvl4cBjLvlOzNuGCbFZrFoajqGaK1SATqKmIc';
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-let allPRs = [], allLinks = [], allIscr = [];
+let allPRs = [], allLinks = [], allIscr = [], allPRLinks = [];
 
 async function doLogin() {
   const email = document.getElementById('a-email').value.trim();
@@ -202,14 +217,16 @@ function showTab(name) {
 }
 
 async function loadAll() {
-  const [prs, links, iscrs] = await Promise.all([
+  const [prs, links, iscrs, prLinks] = await Promise.all([
     sb.from('profiles').select('*').order('created_at'),
     sb.from('affiliate_links').select('*').order('book'),
-    sb.from('iscrizioni').select('*').order('created_at', {ascending:false})
+    sb.from('iscrizioni').select('*').order('created_at', {ascending:false}),
+    sb.from('pr_links').select('*')
   ]);
   allPRs = prs.data || [];
   allLinks = links.data || [];
   allIscr = iscrs.data || [];
+  allPRLinks = prLinks.data || [];
 
   renderOverview();
   renderPRList();
@@ -321,7 +338,10 @@ function renderPRList() {
           <td style="color:var(--blue)">${totN}</td>
           <td style="color:var(--green);font-family:'Bebas Neue',sans-serif">€${totE.toLocaleString('it-IT')}</td>
           <td style="color:var(--gray);font-size:.78rem">${fl}</td>
-          <td><button class="btn-sm btn-red" onclick="deletePR('${p.id}')">Elimina</button></td>
+          <td>
+            <button class="btn-sm btn-blue" onclick="openPRLinksModal('${p.id}','${(p.username||p.full_name||'').replace(/'/g,"\\'")}')">Link</button>
+            <button class="btn-sm btn-red" onclick="deletePR('${p.id}')">Elimina</button>
+          </td>
         </tr>`;}).join('')}
       </tbody>
     </table>` : '<div class="empty-state">Nessun PR ancora.</div>';
@@ -433,6 +453,54 @@ async function saveLink() {
   const { data } = await sb.from('affiliate_links').select('*').order('book');
   allLinks = data || [];
   renderLinks();
+}
+
+// ── PR LINKS (link personalizzati per PR) ────────────────────────────────
+function openPRLinksModal(prId, prName) {
+  document.getElementById('prlinks-pr-id').value = prId;
+  document.getElementById('prlinks-pr-name').textContent = prName;
+
+  const fields = document.getElementById('prlinks-fields');
+  fields.innerHTML = allLinks.map(l => {
+    const existing = allPRLinks.find(pl => pl.pr_id === prId && pl.book === l.book);
+    return `
+      <div style="margin-bottom:.9rem">
+        <label style="font-size:.75rem;color:${l.colore};font-weight:700;display:block;margin-bottom:.4rem">${l.book}</label>
+        <input class="form-input prlink-input" data-book="${l.book}" placeholder="Default: ${l.url}" value="${existing ? existing.url : ''}">
+      </div>`;
+  }).join('');
+
+  document.getElementById('prlinks-modal').style.display = 'flex';
+}
+
+function closePRLinksModal() {
+  document.getElementById('prlinks-modal').style.display = 'none';
+}
+
+async function savePRLinks() {
+  const prId = document.getElementById('prlinks-pr-id').value;
+  const inputs = document.querySelectorAll('.prlink-input');
+
+  for (const input of inputs) {
+    const book = input.getAttribute('data-book');
+    const url = input.value.trim();
+    const existing = allPRLinks.find(pl => pl.pr_id === prId && pl.book === book);
+
+    if (url) {
+      if (existing) {
+        await sb.from('pr_links').update({ url }).eq('id', existing.id);
+      } else {
+        await sb.from('pr_links').insert({ pr_id: prId, book, url });
+      }
+    } else if (existing) {
+      // Campo vuoto e link esistente -> elimina (torna al default)
+      await sb.from('pr_links').delete().eq('id', existing.id);
+    }
+  }
+
+  const { data } = await sb.from('pr_links').select('*');
+  allPRLinks = data || [];
+  closePRLinksModal();
 }
 
 sb.auth.getSession().then(async ({ data }) => {
