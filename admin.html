@@ -25,8 +25,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold);letter-spacing:2px}
 .nav-badge{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--red);font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:4px;letter-spacing:1px}
 .btn-logout{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:6px;padding:.3rem .75rem;font-size:.73rem;cursor:pointer;font-family:'DM Sans',sans-serif}
-.tabs{display:flex;gap:.3rem;padding:.7rem 1.5rem 0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.06);margin-top:56px}
-.tab{padding:.55rem 1.1rem;border-radius:8px 8px 0 0;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--gray);border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:all .2s}
+.tabs{display:flex;gap:.3rem;padding:.7rem 1.5rem 0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.06);margin-top:56px;overflow-x:auto}
+.tab{padding:.55rem 1.1rem;border-radius:8px 8px 0 0;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--gray);border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
 .tab.active{background:var(--card);color:var(--gold)}
 .content{padding:1.8rem 1.5rem;max-width:1200px;margin:0 auto}
 .section{display:none}
@@ -34,28 +34,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--off);margin-bottom:1.2rem}
 .card-box{background:var(--card);border-radius:12px;padding:1.4rem;margin-bottom:1.2rem;border:1px solid rgba(255,255,255,.06)}
 .card-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold);margin-bottom:1rem}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:1.5rem}
 .stat-card{background:var(--card);border-radius:12px;padding:1.2rem;text-align:center;border:1px solid rgba(255,255,255,.06)}
-.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);line-height:1}
-.stat-lbl{font-size:.72rem;color:var(--gray);margin-top:.3rem;text-transform:uppercase;letter-spacing:1px}
-/* TABLE */
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);line-height:1}
+.stat-lbl{font-size:.7rem;color:var(--gray);margin-top:.3rem;text-transform:uppercase;letter-spacing:1px}
 .data-table{width:100%;border-collapse:collapse}
-.data-table th{background:rgba(245,200,66,.1);color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:1px;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(245,200,66,.15)}
-.data-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);font-size:.85rem;vertical-align:middle}
+.data-table th{background:rgba(245,200,66,.1);color:var(--gold);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;padding:.6rem 1rem;text-align:left;border-bottom:1px solid rgba(245,200,66,.15)}
+.data-table td{padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);font-size:.83rem;vertical-align:middle}
 .data-table tr:hover td{background:rgba(255,255,255,.02)}
-.badge{display:inline-block;padding:.2rem .5rem;border-radius:4px;font-size:.68rem;font-weight:700;color:#080C1A}
-.btn-sm{padding:.3rem .75rem;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;border:none}
+.badge{display:inline-block;padding:.2rem .5rem;border-radius:4px;font-size:.66rem;font-weight:700;color:#080C1A}
+.btn-sm{padding:.3rem .7rem;border-radius:6px;font-size:.73rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;border:none;margin-right:.2rem}
 .btn-red{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
 .btn-blue{background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
 .btn-green{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
-.btn-gold-sm{background:var(--gold);color:#080C1A}
-/* FORM */
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
 @media(max-width:600px){.form-row{grid-template-columns:1fr}}
 .form-input{width:100%;background:#0a0e1f;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:.65rem .9rem;color:var(--off);font-size:.88rem;font-family:'DM Sans',sans-serif;outline:none}
 .form-input:focus{border-color:var(--gold)}
 .empty-state{text-align:center;color:var(--gray);padding:2.5rem;font-size:.88rem}
-.pill-clr{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
+.netto-pos{color:var(--green);font-family:'Bebas Neue',sans-serif}
+.netto-neg{color:var(--red);font-family:'Bebas Neue',sans-serif}
+.dep-pill{font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:20px;display:inline-block;margin-left:.3rem}
 </style>
 </head>
 <body>
@@ -64,7 +63,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
   <div class="login-box">
     <div class="login-logo">ADMIN</div>
     <div class="login-sub">Accesso riservato</div>
-    <div class="form-group"><label>Email</label><input type="text" id="a-email" placeholder="email admin"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="a-email" placeholder="email admin"></div>
     <div class="form-group"><label>Password</label><input type="password" id="a-pw" placeholder="••••••••"></div>
     <button class="btn-gold" onclick="doLogin()">ACCEDI</button>
     <div class="error-msg" id="a-err"></div>
@@ -84,6 +83,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
     <button class="tab active" onclick="showTab('overview')">📊 Overview</button>
     <button class="tab" onclick="showTab('pr')">👥 PR</button>
     <button class="tab" onclick="showTab('iscrizioni')">✍️ Iscrizioni</button>
+    <button class="tab" onclick="showTab('margini')">💹 Margini</button>
     <button class="tab" onclick="showTab('links')">🔗 Link</button>
   </div>
 
@@ -92,8 +92,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
     <div class="sec-title">OVERVIEW</div>
     <div class="stats-grid" id="ov-stats"></div>
     <div class="card-box">
-      <div class="card-title">CLASSIFICA PR (mese corrente)</div>
-      <div id="ov-ranking"><div class="empty-state">Caricamento...</div></div>
+      <div class="card-title">CLASSIFICA PR</div>
+      <div id="ov-ranking"></div>
     </div>
   </div>
 
@@ -118,10 +118,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
       <div class="error-msg" id="pr-err"></div>
       <div id="pr-success" style="display:none;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green);border-radius:8px;padding:.65rem 1rem;font-size:.82rem;margin-top:.7rem"></div>
     </div>
-
     <div class="card-box">
       <div class="card-title">LISTA PR</div>
-      <div id="pr-list"><div class="empty-state">Caricamento...</div></div>
+      <div id="pr-list"></div>
     </div>
   </div>
 
@@ -129,15 +128,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
   <div class="content section" id="tab-iscrizioni">
     <div class="sec-title">TUTTE LE ISCRIZIONI</div>
     <div style="display:flex;gap:.8rem;margin-bottom:1.2rem;flex-wrap:wrap">
-      <select class="form-input" id="filter-pr" style="max-width:220px" onchange="loadAllIscrizioni()">
+      <select class="form-input" id="filter-pr" style="max-width:200px" onchange="loadAllIscrizioni()">
         <option value="">Tutti i PR</option>
       </select>
-      <select class="form-input" id="filter-book" style="max-width:180px" onchange="loadAllIscrizioni()">
+      <select class="form-input" id="filter-book" style="max-width:160px" onchange="loadAllIscrizioni()">
         <option value="">Tutti i book</option>
+      </select>
+      <select class="form-input" id="filter-dep" style="max-width:180px" onchange="loadAllIscrizioni()">
+        <option value="">Tutti i depositi</option>
+        <option value="true">Solo dep. cliente</option>
+        <option value="false">Solo dep. interno</option>
       </select>
     </div>
     <div class="card-box" style="padding:0;overflow:hidden">
-      <div id="iscr-table"><div class="empty-state">Caricamento...</div></div>
+      <div id="iscr-table"></div>
+    </div>
+  </div>
+
+  <!-- MARGINI -->
+  <div class="content section" id="tab-margini">
+    <div class="sec-title">ANALISI MARGINI</div>
+    <div class="stats-grid" id="margini-stats"></div>
+    <div class="card-box">
+      <div class="card-title">MARGINE PER BOOK</div>
+      <div id="margini-book-table"></div>
+    </div>
+    <div class="card-box">
+      <div class="card-title">MARGINE PER PR</div>
+      <div id="margini-pr-table"></div>
     </div>
   </div>
 
@@ -145,7 +163,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
   <div class="content section" id="tab-links">
     <div class="sec-title">LINK DI AFFILIAZIONE</div>
     <div class="card-box" style="padding:0;overflow:hidden">
-      <div id="links-table"><div class="empty-state">Caricamento...</div></div>
+      <div id="links-table"></div>
     </div>
   </div>
 </div>
@@ -153,30 +171,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(
 <!-- EDIT LINK MODAL -->
 <div id="edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:1rem">
   <div style="background:var(--card);border:1.5px solid rgba(245,200,66,.2);border-radius:14px;padding:2rem;width:100%;max-width:460px">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);margin-bottom:1.2rem" id="edit-modal-title">MODIFICA LINK</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);margin-bottom:1rem">MODIFICA LINK</div>
     <input type="hidden" id="edit-id">
     <div style="margin-bottom:1rem"><label style="font-size:.75rem;color:var(--gray);display:block;margin-bottom:.4rem">BOOK</label>
       <input class="form-input" id="edit-book" readonly style="opacity:.6"></div>
-    <div style="margin-bottom:1rem"><label style="font-size:.75rem;color:var(--gray);display:block;margin-bottom:.4rem">URL AFFILIAZIONE</label>
+    <div style="margin-bottom:1rem"><label style="font-size:.75rem;color:var(--gray);display:block;margin-bottom:.4rem">URL DEFAULT</label>
       <input class="form-input" id="edit-url" placeholder="https://..."></div>
-    <div style="display:flex;gap:.7rem;margin-top:1.2rem">
-      <button class="btn-gold" style="width:auto;padding:.7rem 2rem" onclick="saveLink()">SALVA</button>
-      <button style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:8px;padding:.7rem 1.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem" onclick="closeEditModal()">Annulla</button>
+    <div style="display:flex;gap:.7rem;margin-top:1rem">
+      <button class="btn-gold" style="width:auto;padding:.65rem 1.8rem" onclick="saveLink()">SALVA</button>
+      <button style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:8px;padding:.65rem 1.4rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem" onclick="closeEditModal()">Annulla</button>
     </div>
   </div>
 </div>
 
 <!-- PR LINKS MODAL -->
 <div id="prlinks-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:1rem">
-  <div style="background:var(--card);border:1.5px solid rgba(245,200,66,.2);border-radius:14px;padding:2rem;width:100%;max-width:520px">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);margin-bottom:.3rem">LINK PERSONALIZZATI</div>
+  <div style="background:var(--card);border:1.5px solid rgba(245,200,66,.2);border-radius:14px;padding:2rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);margin-bottom:.3rem">LINK PERSONALIZZATI</div>
     <div style="font-size:.85rem;color:var(--gray);margin-bottom:1.2rem" id="prlinks-pr-name"></div>
     <input type="hidden" id="prlinks-pr-id">
     <div id="prlinks-fields"></div>
-    <p style="font-size:.75rem;color:var(--gray);margin:1rem 0;font-style:italic">Lascia vuoto per usare il link di default del book.</p>
-    <div style="display:flex;gap:.7rem;margin-top:.5rem">
-      <button class="btn-gold" style="width:auto;padding:.7rem 2rem" onclick="savePRLinks()">SALVA</button>
-      <button style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:8px;padding:.7rem 1.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem" onclick="closePRLinksModal()">Annulla</button>
+    <p style="font-size:.75rem;color:var(--gray);margin:.8rem 0;font-style:italic">Lascia vuoto per usare il link default del book.</p>
+    <div style="display:flex;gap:.7rem">
+      <button class="btn-gold" style="width:auto;padding:.65rem 1.8rem" onclick="savePRLinks()">SALVA</button>
+      <button style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:8px;padding:.65rem 1.4rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem" onclick="closePRLinksModal()">Annulla</button>
     </div>
   </div>
 </div>
@@ -186,7 +204,41 @@ const SUPA_URL = 'https://igagpwrdkjuburywrzcq.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnYWdwd3Jka2p1YnVyeXdyemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMDgyNzksImV4cCI6MjA5NjU4NDI3OX0.vX4c7XWvl4cBjLvlOzNuGCbFZrFoajqGaK1SATqKmIc';
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-let allPRs = [], allLinks = [], allIscr = [], allPRLinks = [];
+const BOOK_CONFIG = {
+  GOLDBET:    {pr_int:20, pr_dep:25, cpa:60, baseline:10},
+  SISAL:      {pr_int:20, pr_dep:25, cpa:60, baseline:10},
+  LOTTOMATICA:{pr_int:20, pr_dep:30, cpa:60, baseline:20},
+  PLANETWIN:  {pr_int:20, pr_dep:30, cpa:60, baseline:20},
+  POKERSTARS: {pr_int:20, pr_dep:30, cpa:60, baseline:20},
+  SNAI:       {pr_int:20, pr_dep:30, cpa:60, baseline:20},
+  BETSSON:    {pr_int:10, pr_dep:20, cpa:45, baseline:25},
+};
+
+let allPRs=[], allLinks=[], allIscr=[], allPRLinks=[];
+
+function calcMargine(book, depositoCliente) {
+  const c = BOOK_CONFIG[book] || {pr_int:20,pr_dep:30,cpa:60,baseline:20};
+  const cpa = c.cpa;
+  const baseline = depositoCliente ? 0 : c.baseline; // cliente paga baseline se deposita
+  const comp = depositoCliente ? c.pr_dep : c.pr_int;
+  return { cpa, baseline, comp, netto: cpa - baseline - comp };
+}
+
+function calcIscrMargine(iscr) {
+  const dep = iscr.deposito_cliente;
+  const books = iscr.books || [];
+  let totCpa=0, totBase=0, totComp=0, totNetto=0;
+  books.forEach(b => {
+    const m = calcMargine(b, dep);
+    totCpa+=m.cpa; totBase+=m.baseline; totComp+=m.comp; totNetto+=m.netto;
+  });
+  return {cpa:totCpa, baseline:totBase, comp:totComp, netto:totNetto};
+}
+
+function fmtN(n) {
+  const v = n.toFixed(2);
+  return `<span class="${n>=0?'netto-pos':'netto-neg'}">€${parseFloat(v).toLocaleString('it-IT',{minimumFractionDigits:2})}</span>`;
+}
 
 async function doLogin() {
   const email = document.getElementById('a-email').value.trim();
@@ -194,11 +246,10 @@ async function doLogin() {
   const err = document.getElementById('a-err');
   err.style.display='none';
   const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
-  if (error) { err.textContent='Credenziali non valide: '+error.message; err.style.display='block'; return; }
-  await new Promise(r => setTimeout(r, 600));
+  if (error) { err.textContent='Credenziali non valide'; err.style.display='block'; return; }
+  await new Promise(r=>setTimeout(r,600));
   const { data: prof, error: profErr } = await sb.from('profiles').select('*').eq('id', data.user.id).maybeSingle();
-  if (profErr) { await sb.auth.signOut(); err.textContent='Errore: '+profErr.message; err.style.display='block'; return; }
-  if (!prof) { await sb.auth.signOut(); err.textContent='Profilo non trovato'; err.style.display='block'; return; }
+  if (profErr||!prof) { await sb.auth.signOut(); err.textContent='Profilo non trovato: '+(profErr?.message||''); err.style.display='block'; return; }
   if (!prof.is_admin) { await sb.auth.signOut(); err.textContent='Accesso non autorizzato'; err.style.display='block'; return; }
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
@@ -208,305 +259,309 @@ async function doLogin() {
 async function doLogout() { await sb.auth.signOut(); location.reload(); }
 
 function showTab(name) {
-  const tabs = ['overview','pr','iscrizioni','links'];
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', tabs[i]===name));
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const tabs=['overview','pr','iscrizioni','margini','links'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===name));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  if (name==='iscrizioni') loadAllIscrizioni();
-  if (name==='links') renderLinks();
+  if(name==='iscrizioni') loadAllIscrizioni();
+  if(name==='links') renderLinks();
+  if(name==='margini') renderMargini();
 }
 
 async function loadAll() {
-  const [prs, links, iscrs, prLinks] = await Promise.all([
+  const [prs,links,iscrs,prLinks] = await Promise.all([
     sb.from('profiles').select('*').order('created_at'),
     sb.from('affiliate_links').select('*').order('book'),
-    sb.from('iscrizioni').select('*').order('created_at', {ascending:false}),
-    sb.from('pr_links').select('*')
+    sb.from('iscrizioni').select('*').order('created_at',{ascending:false}),
+    sb.from('pr_links').select('*'),
   ]);
-  allPRs = prs.data || [];
-  allLinks = links.data || [];
-  allIscr = iscrs.data || [];
-  allPRLinks = prLinks.data || [];
-
+  allPRs=prs.data||[]; allLinks=links.data||[];
+  allIscr=iscrs.data||[]; allPRLinks=prLinks.data||[];
   renderOverview();
   renderPRList();
-
-  // Populate filters
-  const prSel = document.getElementById('filter-pr');
-  allPRs.forEach(p => {
-    const o = document.createElement('option'); o.value=p.id; o.textContent=p.username||p.full_name;
-    prSel.appendChild(o);
-  });
-  const bkSel = document.getElementById('filter-book');
-  allLinks.forEach(l => {
-    const o = document.createElement('option'); o.value=l.book; o.textContent=l.book;
-    bkSel.appendChild(o);
-  });
-}
-
-function calcEuro(n) { return ({1:17,2:18,3:19,4:20})[Math.min(n,4)]||17; }
-
-// Margine netto per singola ID
-// incasso: 40 per book (SISAL, GOLDBET, LOTTOMATICA, PLANETWIN)
-// deposito: 10.5 per ogni book (tutti e 4)
-// commissione PR: calcEuro(nBooks) per ogni book
-function calcMargine(books) {
-  const INCASSO = { SISAL:40, GOLDBET:40, LOTTOMATICA:40, PLANETWIN:40 };
-  const DEPOSITO = { SISAL:10.5, GOLDBET:10.5, LOTTOMATICA:10.5, PLANETWIN:10.5 };
-  const n = books.length;
-  const prRate = calcEuro(n);
-  let incasso = 0, depositi = 0, commissioni = 0;
-  books.forEach(b => {
-    incasso += INCASSO[b] || 40;
-    depositi += DEPOSITO[b] || 0;
-    commissioni += prRate;
-  });
-  return { incasso, depositi, commissioni, netto: incasso - depositi - commissioni };
-}
-
-function fmtEuro(n) {
-  const clr = n >= 0 ? 'var(--green)' : 'var(--red)';
-  return `<span style="color:${clr};font-family:'Bebas Neue',sans-serif">€${n.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`;
+  const prSel=document.getElementById('filter-pr');
+  prSel.innerHTML='<option value="">Tutti i PR</option>';
+  allPRs.filter(p=>!p.is_admin).forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.username||p.full_name;prSel.appendChild(o);});
+  const bkSel=document.getElementById('filter-book');
+  bkSel.innerHTML='<option value="">Tutti i book</option>';
+  allLinks.forEach(l=>{const o=document.createElement('option');o.value=l.book;o.textContent=l.book;bkSel.appendChild(o);});
 }
 
 function renderOverview() {
-  const totalPR = allPRs.filter(p=>!p.is_admin).length;
-  const totalIscr = allIscr.reduce((s,i)=>s+(i.books?.length||0),0);
-  const totalEuro = allIscr.reduce((s,i)=>{ const n=i.books?.length||0; return s+n*calcEuro(n); },0);
-
-  // Calcola margini totali
-  let totIncasso = 0, totDepositi = 0, totComm = 0, totNetto = 0;
-  allIscr.forEach(i => {
-    const m = calcMargine(i.books || []);
-    totIncasso += m.incasso; totDepositi += m.depositi;
-    totComm += m.commissioni; totNetto += m.netto;
+  let totCpa=0,totBase=0,totComp=0,totNetto=0,totDep=0;
+  allIscr.forEach(i=>{
+    const m=calcIscrMargine(i);
+    totCpa+=m.cpa;totBase+=m.baseline;totComp+=m.comp;totNetto+=m.netto;
+    if(i.deposito_cliente) totDep+=(i.books?.length||0);
   });
-
-  document.getElementById('ov-stats').innerHTML = `
-    <div class="stat-card"><div class="stat-val">${totalPR}</div><div class="stat-lbl">PR attivi</div></div>
+  const totIscrizioni=allIscr.reduce((s,i)=>s+(i.books?.length||0),0);
+  document.getElementById('ov-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-val">${allPRs.filter(p=>!p.is_admin).length}</div><div class="stat-lbl">PR attivi</div></div>
     <div class="stat-card"><div class="stat-val" style="color:var(--blue)">${allIscr.length}</div><div class="stat-lbl">Persone</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--teal)">€${totIncasso.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Incasso lordo</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--red)">€${totDepositi.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Depositi pagati</div></div>
-    <div class="stat-card"><div class="stat-val" style="color:var(--gold)">€${totComm.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Commissioni PR</div></div>
-    <div class="stat-card" style="border-color:rgba(34,197,94,.4)"><div class="stat-val" style="color:var(--green)">€${totNetto.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="stat-lbl">Margine netto</div></div>`;
+    <div class="stat-card"><div class="stat-val" style="color:var(--teal)">${totIscrizioni}</div><div class="stat-lbl">Iscrizioni</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--green)">${totDep}</div><div class="stat-lbl">Con dep. cliente</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--teal)">€${totCpa.toLocaleString('it-IT')}</div><div class="stat-lbl">CPA incassato</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--red)">€${totBase.toLocaleString('it-IT')}</div><div class="stat-lbl">Baseline pagata</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--gold)">€${totComp.toLocaleString('it-IT')}</div><div class="stat-lbl">Comm. PR</div></div>
+    <div class="stat-card" style="border-color:rgba(34,197,94,.4)"><div class="stat-val" style="color:var(--green)">€${totNetto.toLocaleString('it-IT')}</div><div class="stat-lbl">Margine netto</div></div>`;
 
-  // Ranking
-  const byPR = {};
-  allIscr.forEach(i => {
-    const pr = allPRs.find(p=>p.id===i.pr_id);
-    const name = pr?.username || pr?.full_name || 'PR sconosciuto';
-    if (!byPR[name]) byPR[name] = { iscr:0, comm:0, incasso:0, depositi:0, netto:0 };
-    const m = calcMargine(i.books || []);
-    byPR[name].iscr += i.books?.length||0;
-    byPR[name].comm += m.commissioni;
-    byPR[name].incasso += m.incasso;
-    byPR[name].depositi += m.depositi;
-    byPR[name].netto += m.netto;
+  const byPR={};
+  allIscr.forEach(i=>{
+    const pr=allPRs.find(p=>p.id===i.pr_id);
+    const name=pr?.username||pr?.full_name||'PR sconosciuto';
+    if(!byPR[name]) byPR[name]={iscr:0,cpa:0,baseline:0,comp:0,netto:0};
+    const m=calcIscrMargine(i);
+    byPR[name].iscr+=(i.books?.length||0);
+    byPR[name].cpa+=m.cpa;byPR[name].baseline+=m.baseline;
+    byPR[name].comp+=m.comp;byPR[name].netto+=m.netto;
   });
-  const sorted = Object.entries(byPR).sort((a,b)=>b[1].netto-a[1].netto);
-  document.getElementById('ov-ranking').innerHTML = sorted.length ? `
+  const sorted=Object.entries(byPR).sort((a,b)=>b[1].netto-a[1].netto);
+  document.getElementById('ov-ranking').innerHTML=sorted.length?`
     <table class="data-table">
-      <thead><tr><th>#</th><th>PR</th><th>Iscr.</th><th>Comm. PR</th><th>Incasso</th><th>Depositi</th><th>Margine netto</th></tr></thead>
-      <tbody>${sorted.map(([name,d],idx)=>`
-        <tr>
-          <td style="color:var(--gray);font-size:.8rem">${idx+1}</td>
-          <td style="font-weight:600">${name}</td>
-          <td style="color:var(--blue)">${d.iscr}</td>
-          <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">€${d.comm.toFixed(2)}</td>
-          <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif">€${d.incasso.toFixed(2)}</td>
-          <td style="color:var(--red);font-family:'Bebas Neue',sans-serif">€${d.depositi.toFixed(2)}</td>
-          <td>${fmtEuro(d.netto)}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>` : '<div class="empty-state">Nessun dato.</div>';
+      <thead><tr><th>#</th><th>PR</th><th>Iscr.</th><th>CPA</th><th>Baseline</th><th>Comm. PR</th><th>Margine netto</th></tr></thead>
+      <tbody>${sorted.map(([name,d],idx)=>`<tr>
+        <td style="color:var(--gray)">${idx+1}</td>
+        <td style="font-weight:600">${name}</td>
+        <td style="color:var(--blue)">${d.iscr}</td>
+        <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif">€${d.cpa.toFixed(0)}</td>
+        <td style="color:var(--red);font-family:'Bebas Neue',sans-serif">€${d.baseline.toFixed(0)}</td>
+        <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">€${d.comp.toFixed(0)}</td>
+        <td>${fmtN(d.netto)}</td>
+      </tr>`).join('')}</tbody>
+    </table>`:'<div class="empty-state">Nessun dato.</div>';
 }
 
 function renderPRList() {
-  const prs = allPRs.filter(p=>!p.is_admin);
-  document.getElementById('pr-list').innerHTML = prs.length ? `
+  const prs=allPRs.filter(p=>!p.is_admin);
+  document.getElementById('pr-list').innerHTML=prs.length?`
     <table class="data-table">
-      <thead><tr><th>Username</th><th>Nome</th><th>Email</th><th>Iscrizioni</th><th>Commissioni</th><th>Ciclo</th><th>Azioni</th></tr></thead>
-      <tbody>${prs.map(p => {
-        const pIscr = allIscr.filter(i=>i.pr_id===p.id);
-        const totN = pIscr.reduce((s,i)=>s+(i.books?.length||0),0);
-        const totE = pIscr.reduce((s,i)=>{ const n=i.books?.length||0; return s+n*calcEuro(n);},0);
-        const fl = p.first_login_at ? new Date(p.first_login_at).toLocaleDateString('it-IT') : '—';
+      <thead><tr><th>Username</th><th>Nome</th><th>Iscrizioni</th><th>Comm. PR</th><th>Margine netto</th><th>Primo accesso</th><th>Azioni</th></tr></thead>
+      <tbody>${prs.map(p=>{
+        const pI=allIscr.filter(i=>i.pr_id===p.id);
+        const totI=pI.reduce((s,i)=>s+(i.books?.length||0),0);
+        const totComp=pI.reduce((s,i)=>s+calcIscrMargine(i).comp,0);
+        const totNetto=pI.reduce((s,i)=>s+calcIscrMargine(i).netto,0);
+        const fl=p.first_login_at?new Date(p.first_login_at).toLocaleDateString('it-IT'):'—';
         return `<tr>
           <td style="font-weight:600;color:var(--gold)">${p.username||'—'}</td>
           <td>${p.full_name||'—'}</td>
-          <td style="color:var(--gray);font-size:.8rem">${p.email||'—'}</td>
-          <td style="color:var(--blue)">${totN}</td>
-          <td style="color:var(--green);font-family:'Bebas Neue',sans-serif">€${totE.toLocaleString('it-IT')}</td>
+          <td style="color:var(--blue)">${totI}</td>
+          <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">€${totComp.toFixed(0)}</td>
+          <td>${fmtN(totNetto)}</td>
           <td style="color:var(--gray);font-size:.78rem">${fl}</td>
           <td>
             <button class="btn-sm btn-blue" onclick="openPRLinksModal('${p.id}','${(p.username||p.full_name||'').replace(/'/g,"\\'")}')">Link</button>
             <button class="btn-sm btn-red" onclick="deletePR('${p.id}')">Elimina</button>
           </td>
-        </tr>`;}).join('')}
-      </tbody>
-    </table>` : '<div class="empty-state">Nessun PR ancora.</div>';
+        </tr>`;}).join('')}</tbody>
+    </table>`:'<div class="empty-state">Nessun PR ancora.</div>';
 }
 
 async function createPR() {
-  const name = document.getElementById('pr-name').value.trim();
-  const username = document.getElementById('pr-username').value.trim();
-  const email = document.getElementById('pr-email').value.trim();
-  const pw = document.getElementById('pr-pw').value;
-  const err = document.getElementById('pr-err');
-  const suc = document.getElementById('pr-success');
-  err.style.display='none'; suc.style.display='none';
-  if (!name||!username||!email||!pw) { err.textContent='Compila tutti i campi'; err.style.display='block'; return; }
-  if (pw.length<8) { err.textContent='Password minimo 8 caratteri'; err.style.display='block'; return; }
-
-  // Use service role would be needed for admin user creation - using signUp as workaround
-  const { data, error } = await sb.auth.signUp({ email, password: pw });
-  if (error) { err.textContent='Errore: '+error.message; err.style.display='block'; return; }
-
-  if (data.user) {
-    await sb.from('profiles').insert({
-      id: data.user.id, username, full_name: name,
-      is_admin: false, must_change_password: true
-    });
-    suc.textContent = `✓ PR "${username}" creato! Credenziali: ${email} / ${pw}`;
+  const name=document.getElementById('pr-name').value.trim();
+  const username=document.getElementById('pr-username').value.trim();
+  const email=document.getElementById('pr-email').value.trim();
+  const pw=document.getElementById('pr-pw').value;
+  const err=document.getElementById('pr-err');
+  const suc=document.getElementById('pr-success');
+  err.style.display='none';suc.style.display='none';
+  if(!name||!username||!email||!pw){err.textContent='Compila tutti i campi';err.style.display='block';return;}
+  if(pw.length<8){err.textContent='Password minimo 8 caratteri';err.style.display='block';return;}
+  const {data,error}=await sb.auth.signUp({email,password:pw});
+  if(error){err.textContent='Errore: '+error.message;err.style.display='block';return;}
+  if(data.user){
+    await sb.from('profiles').insert({id:data.user.id,username,full_name:name,is_admin:false,must_change_password:true});
+    suc.textContent=`✓ PR "${username}" creato! Email: ${email} / PW temporanea: ${pw}`;
     suc.style.display='block';
-    document.getElementById('pr-name').value='';
-    document.getElementById('pr-username').value='';
-    document.getElementById('pr-email').value='';
-    document.getElementById('pr-pw').value='';
+    document.getElementById('pr-name').value='';document.getElementById('pr-username').value='';
+    document.getElementById('pr-email').value='';document.getElementById('pr-pw').value='';
     await loadAll();
   }
 }
 
 async function deletePR(id) {
-  if (!confirm('Eliminare questo PR e tutte le sue iscrizioni?')) return;
-  await sb.from('iscrizioni').delete().eq('pr_id', id);
-  await sb.from('profiles').delete().eq('id', id);
+  if(!confirm('Eliminare questo PR e tutte le sue iscrizioni?'))return;
+  await sb.from('iscrizioni').delete().eq('pr_id',id);
+  await sb.from('pr_links').delete().eq('pr_id',id);
+  await sb.from('profiles').delete().eq('id',id);
   await loadAll();
 }
 
 async function loadAllIscrizioni() {
-  const prFilter = document.getElementById('filter-pr').value;
-  const bkFilter = document.getElementById('filter-book').value;
-  let data = [...allIscr];
-  if (prFilter) data = data.filter(i=>i.pr_id===prFilter);
-  if (bkFilter) data = data.filter(i=>i.books?.includes(bkFilter));
+  const prF=document.getElementById('filter-pr').value;
+  const bkF=document.getElementById('filter-book').value;
+  const depF=document.getElementById('filter-dep').value;
+  let data=[...allIscr];
+  if(prF) data=data.filter(i=>i.pr_id===prF);
+  if(bkF) data=data.filter(i=>i.books?.includes(bkF));
+  if(depF!=='') data=data.filter(i=>String(i.deposito_cliente)===depF);
 
-  document.getElementById('iscr-table').innerHTML = data.length ? `
+  document.getElementById('iscr-table').innerHTML=data.length?`
     <table class="data-table">
-      <thead><tr><th>Persona</th><th>PR</th><th>Book</th><th>Data</th><th>Incasso</th><th>Depositi</th><th>Comm. PR</th><th>Margine netto</th><th>Azioni</th></tr></thead>
-      <tbody>${data.map(i => {
-        const pr = allPRs.find(p=>p.id===i.pr_id);
-        const n = i.books?.length||0;
-        const euro = n * calcEuro(n);
-        const m = calcMargine(i.books || []);
+      <thead><tr><th>Persona</th><th>PR</th><th>Book</th><th>Deposito</th><th>Data</th><th>CPA</th><th>Baseline</th><th>Comm. PR</th><th>Margine</th><th></th></tr></thead>
+      <tbody>${data.map(i=>{
+        const pr=allPRs.find(p=>p.id===i.pr_id);
+        const m=calcIscrMargine(i);
+        const dep=i.deposito_cliente;
         return `<tr>
           <td style="font-weight:600">${i.nome_cognome}</td>
           <td style="color:var(--gold)">${pr?.username||'—'}</td>
-          <td>${(i.books||[]).map(b=>{ const lk=allLinks.find(x=>x.book===b); return `<span class="badge" style="background:${lk?.colore||'#666'}">${b}</span>`; }).join(' ')}</td>
-          <td style="color:var(--gray);font-size:.8rem">${new Date(i.data_iscrizione).toLocaleDateString('it-IT')}</td>
-          <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif" title="Incasso lordo">€${m.incasso.toFixed(2)}</td>
-          <td style="color:var(--red);font-family:'Bebas Neue',sans-serif" title="Depositi">-€${m.depositi.toFixed(2)}</td>
-          <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif" title="Commissione PR">-€${m.commissioni.toFixed(2)}</td>
-          <td>${fmtEuro(m.netto)}</td>
-          <td><button class="btn-sm btn-red" onclick="deleteIscr('${i.id}')">Elimina</button></td>
-        </tr>`;}).join('')}
-      </tbody>
-    </table>` : '<div class="empty-state" style="padding:2rem">Nessuna iscrizione trovata.</div>';
+          <td>${(i.books||[]).map(b=>{const lk=allLinks.find(x=>x.book===b);return`<span class="badge" style="background:${lk?.colore||'#666'}">${b}</span>`;}).join(' ')}</td>
+          <td><span class="dep-pill" style="${dep?'background:rgba(34,197,94,.15);color:var(--green)':'background:rgba(255,255,255,.06);color:var(--gray)'}">${dep?'💳 Cliente':'🏦 Interno'}</span></td>
+          <td style="color:var(--gray);font-size:.78rem">${new Date(i.data_iscrizione).toLocaleDateString('it-IT')}</td>
+          <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif">€${m.cpa}</td>
+          <td style="color:var(--red);font-family:'Bebas Neue',sans-serif">${m.baseline>0?'-€'+m.baseline:'—'}</td>
+          <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">-€${m.comp}</td>
+          <td>${fmtN(m.netto)}</td>
+          <td><button class="btn-sm btn-red" onclick="deleteIscr('${i.id}')">✕</button></td>
+        </tr>`;}).join('')}</tbody>
+    </table>`:'<div class="empty-state" style="padding:2rem">Nessuna iscrizione trovata.</div>';
 }
 
 async function deleteIscr(id) {
-  if (!confirm('Eliminare questa iscrizione?')) return;
-  await sb.from('iscrizioni').delete().eq('id', id);
-  allIscr = allIscr.filter(i=>i.id!==id);
-  loadAllIscrizioni();
-  renderOverview();
+  if(!confirm('Eliminare questa iscrizione?'))return;
+  allIscr=allIscr.filter(i=>i.id!==id);
+  await sb.from('iscrizioni').delete().eq('id',id);
+  loadAllIscrizioni();renderOverview();
+}
+
+function renderMargini() {
+  // Per book
+  const byBook={};
+  allIscr.forEach(i=>{
+    (i.books||[]).forEach(b=>{
+      if(!byBook[b]) byBook[b]={int:{n:0,cpa:0,base:0,comp:0,netto:0},dep:{n:0,cpa:0,base:0,comp:0,netto:0}};
+      const dep=i.deposito_cliente;
+      const m=calcMargine(b,dep);
+      const k=dep?'dep':'int';
+      byBook[b][k].n++;byBook[b][k].cpa+=m.cpa;byBook[b][k].base+=m.baseline;
+      byBook[b][k].comp+=m.comp;byBook[b][k].netto+=m.netto;
+    });
+  });
+
+  const bookKeys=Object.keys(byBook);
+  document.getElementById('margini-book-table').innerHTML=bookKeys.length?`
+    <table class="data-table">
+      <thead><tr><th>Book</th><th>Tipo</th><th>Iscrizioni</th><th>CPA tot.</th><th>Baseline</th><th>Comm. PR</th><th>Margine netto</th><th>Marg./iscr.</th></tr></thead>
+      <tbody>${bookKeys.map(b=>{
+        const lk=allLinks.find(x=>x.book===b);
+        const rows=[];
+        ['int','dep'].forEach(k=>{
+          const d=byBook[b][k];
+          if(d.n===0)return;
+          rows.push(`<tr>
+            <td><span class="badge" style="background:${lk?.colore||'#666'}">${b}</span></td>
+            <td><span class="dep-pill" style="${k==='dep'?'background:rgba(34,197,94,.15);color:var(--green)':'background:rgba(255,255,255,.06);color:var(--gray)'}">${k==='dep'?'💳 Cliente':'🏦 Interno'}</span></td>
+            <td style="color:var(--blue)">${d.n}</td>
+            <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif">€${d.cpa}</td>
+            <td style="color:var(--red);font-family:'Bebas Neue',sans-serif">${d.base>0?'-€'+d.base:'—'}</td>
+            <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">-€${d.comp}</td>
+            <td>${fmtN(d.netto)}</td>
+            <td>${fmtN(d.n>0?d.netto/d.n:0)}</td>
+          </tr>`);
+        });
+        return rows.join('');
+      }).join('')}</tbody>
+    </table>`:'<div class="empty-state">Nessun dato.</div>';
+
+  // Per PR
+  const byPR={};
+  allIscr.forEach(i=>{
+    const pr=allPRs.find(p=>p.id===i.pr_id);
+    const name=pr?.username||'PR sconosciuto';
+    if(!byPR[name]) byPR[name]={iscr:0,cpa:0,baseline:0,comp:0,netto:0,dep:0};
+    const m=calcIscrMargine(i);
+    byPR[name].iscr+=(i.books?.length||0);
+    byPR[name].cpa+=m.cpa;byPR[name].baseline+=m.baseline;
+    byPR[name].comp+=m.comp;byPR[name].netto+=m.netto;
+    if(i.deposito_cliente) byPR[name].dep+=(i.books?.length||0);
+  });
+  const sortedPR=Object.entries(byPR).sort((a,b)=>b[1].netto-a[1].netto);
+  document.getElementById('margini-pr-table').innerHTML=sortedPR.length?`
+    <table class="data-table">
+      <thead><tr><th>PR</th><th>Iscrizioni</th><th>Di cui dep. cliente</th><th>CPA tot.</th><th>Baseline</th><th>Comm. PR</th><th>Margine netto</th></tr></thead>
+      <tbody>${sortedPR.map(([name,d])=>`<tr>
+        <td style="font-weight:600;color:var(--gold)">${name}</td>
+        <td style="color:var(--blue)">${d.iscr}</td>
+        <td style="color:var(--green)">${d.dep}</td>
+        <td style="color:var(--teal);font-family:'Bebas Neue',sans-serif">€${d.cpa.toFixed(0)}</td>
+        <td style="color:var(--red);font-family:'Bebas Neue',sans-serif">€${d.baseline.toFixed(0)}</td>
+        <td style="color:var(--gold);font-family:'Bebas Neue',sans-serif">€${d.comp.toFixed(0)}</td>
+        <td>${fmtN(d.netto)}</td>
+      </tr>`).join('')}</tbody>
+    </table>`:'<div class="empty-state">Nessun dato.</div>';
 }
 
 function renderLinks() {
-  document.getElementById('links-table').innerHTML = allLinks.length ? `
+  document.getElementById('links-table').innerHTML=allLinks.length?`
     <table class="data-table">
-      <thead><tr><th>Book</th><th>URL Affiliazione</th><th>Azioni</th></tr></thead>
-      <tbody>${allLinks.map(l=>`
-        <tr>
-          <td><span class="pill-clr" style="background:${l.colore}"></span><strong>${l.book}</strong></td>
-          <td style="color:var(--gray);font-size:.8rem;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.url}</td>
+      <thead><tr><th>Book</th><th>Comp. int.</th><th>Comp. dep.</th><th>URL Default</th><th>Azioni</th></tr></thead>
+      <tbody>${allLinks.map(l=>{
+        const c=BOOK_CONFIG[l.book]||{};
+        return`<tr>
+          <td><span class="badge" style="background:${l.colore}">${l.book}</span></td>
+          <td style="color:var(--teal)">€${c.pr_int||'—'}</td>
+          <td style="color:var(--green)">€${c.pr_dep||'—'}</td>
+          <td style="color:var(--gray);font-size:.78rem;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.url}</td>
           <td><button class="btn-sm btn-blue" onclick="openEditModal('${l.id}','${l.book}','${l.url}')">Modifica</button></td>
-        </tr>`).join('')}
-      </tbody>
-    </table>` : '<div class="empty-state">Nessun link.</div>';
+        </tr>`;}).join('')}</tbody>
+    </table>`:'<div class="empty-state">Nessun link.</div>';
 }
 
-function openEditModal(id, book, url) {
+function openEditModal(id,book,url){
   document.getElementById('edit-id').value=id;
   document.getElementById('edit-book').value=book;
   document.getElementById('edit-url').value=url;
   document.getElementById('edit-modal').style.display='flex';
 }
-function closeEditModal() { document.getElementById('edit-modal').style.display='none'; }
-
-async function saveLink() {
-  const id = document.getElementById('edit-id').value;
-  const url = document.getElementById('edit-url').value.trim();
-  if (!url) return;
-  await sb.from('affiliate_links').update({ url }).eq('id', id);
+function closeEditModal(){document.getElementById('edit-modal').style.display='none';}
+async function saveLink(){
+  const id=document.getElementById('edit-id').value;
+  const url=document.getElementById('edit-url').value.trim();
+  if(!url)return;
+  await sb.from('affiliate_links').update({url}).eq('id',id);
   closeEditModal();
-  const { data } = await sb.from('affiliate_links').select('*').order('book');
-  allLinks = data || [];
-  renderLinks();
+  const {data}=await sb.from('affiliate_links').select('*').order('book');
+  allLinks=data||[];renderLinks();
 }
 
-// ── PR LINKS (link personalizzati per PR) ────────────────────────────────
-function openPRLinksModal(prId, prName) {
-  document.getElementById('prlinks-pr-id').value = prId;
-  document.getElementById('prlinks-pr-name').textContent = prName;
-
-  const fields = document.getElementById('prlinks-fields');
-  fields.innerHTML = allLinks.map(l => {
-    const existing = allPRLinks.find(pl => pl.pr_id === prId && pl.book === l.book);
-    return `
-      <div style="margin-bottom:.9rem">
-        <label style="font-size:.75rem;color:${l.colore};font-weight:700;display:block;margin-bottom:.4rem">${l.book}</label>
-        <input class="form-input prlink-input" data-book="${l.book}" placeholder="Default: ${l.url}" value="${existing ? existing.url : ''}">
-      </div>`;
+function openPRLinksModal(prId,prName){
+  document.getElementById('prlinks-pr-id').value=prId;
+  document.getElementById('prlinks-pr-name').textContent=prName;
+  const fields=document.getElementById('prlinks-fields');
+  fields.innerHTML=allLinks.map(l=>{
+    const existing=allPRLinks.find(pl=>pl.pr_id===prId&&pl.book===l.book);
+    return`<div style="margin-bottom:.9rem">
+      <label style="font-size:.75rem;color:${l.colore};font-weight:700;display:block;margin-bottom:.4rem">${l.book}</label>
+      <input class="form-input prlink-input" data-book="${l.book}" placeholder="Default: ${l.url}" value="${existing?existing.url:''}">
+    </div>`;
   }).join('');
-
-  document.getElementById('prlinks-modal').style.display = 'flex';
+  document.getElementById('prlinks-modal').style.display='flex';
 }
-
-function closePRLinksModal() {
-  document.getElementById('prlinks-modal').style.display = 'none';
-}
-
-async function savePRLinks() {
-  const prId = document.getElementById('prlinks-pr-id').value;
-  const inputs = document.querySelectorAll('.prlink-input');
-
-  for (const input of inputs) {
-    const book = input.getAttribute('data-book');
-    const url = input.value.trim();
-    const existing = allPRLinks.find(pl => pl.pr_id === prId && pl.book === book);
-
-    if (url) {
-      if (existing) {
-        await sb.from('pr_links').update({ url }).eq('id', existing.id);
-      } else {
-        await sb.from('pr_links').insert({ pr_id: prId, book, url });
-      }
-    } else if (existing) {
-      // Campo vuoto e link esistente -> elimina (torna al default)
-      await sb.from('pr_links').delete().eq('id', existing.id);
+function closePRLinksModal(){document.getElementById('prlinks-modal').style.display='none';}
+async function savePRLinks(){
+  const prId=document.getElementById('prlinks-pr-id').value;
+  const inputs=document.querySelectorAll('.prlink-input');
+  for(const input of inputs){
+    const book=input.getAttribute('data-book');
+    const url=input.value.trim();
+    const existing=allPRLinks.find(pl=>pl.pr_id===prId&&pl.book===book);
+    if(url){
+      if(existing) await sb.from('pr_links').update({url}).eq('id',existing.id);
+      else await sb.from('pr_links').insert({pr_id:prId,book,url});
+    } else if(existing){
+      await sb.from('pr_links').delete().eq('id',existing.id);
     }
   }
-
-  const { data } = await sb.from('pr_links').select('*');
-  allPRLinks = data || [];
+  const {data}=await sb.from('pr_links').select('*');
+  allPRLinks=data||[];
   closePRLinksModal();
 }
 
-sb.auth.getSession().then(async ({ data }) => {
-  if (data.session) {
-    const { data: prof } = await sb.from('profiles').select('*').eq('id', data.session.user.id).single();
-    if (prof?.is_admin) {
+sb.auth.getSession().then(async({data})=>{
+  if(data.session){
+    const {data:prof}=await sb.from('profiles').select('*').eq('id',data.session.user.id).single();
+    if(prof?.is_admin){
       document.getElementById('login-screen').style.display='none';
       document.getElementById('app').style.display='block';
       await loadAll();
